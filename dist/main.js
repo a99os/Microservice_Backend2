@@ -7,13 +7,16 @@ async function bootstrap() {
     const app = await core_1.NestFactory.createMicroservice(app_module_1.AppModule, {
         transport: microservices_1.Transport.RMQ,
         options: {
-            urls: ['amqp://localhost:5672'],
+            urls: [
+                'amqps://fvehfrmn:huZU1LlMtNGwv7q6EIyc7Ajhc4naPcnh@hawk.rmq.cloudamqp.com/fvehfrmn',
+            ],
             queue: 'main_products_queue',
             queueOptions: {
                 durable: false,
             },
         },
     });
+    await app.listen();
 }
 bootstrap();
 //# sourceMappingURL=main.js.map

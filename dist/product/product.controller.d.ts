@@ -35,6 +35,7 @@ export declare class ProductController {
         _id: import("mongoose").Types.ObjectId;
     }>;
     findAll(): Promise<import("./schemas/product.schema").Product[]>;
+    hello(data: string): Promise<void>;
     findOne(id: string): Promise<import("./schemas/product.schema").Product>;
     update(id: string, updateProductDto: UpdateProductDto): import("mongoose").Query<import("mongoose").Document<unknown, any, import("./schemas/product.schema").Product> & import("./schemas/product.schema").Product & {
         _id: import("mongoose").Types.ObjectId;

@@ -8,7 +8,9 @@ async function bootstrap() {
     {
       transport: Transport.RMQ,
       options: {
-        urls: ['amqp://localhost:5672'],
+        urls: [
+          'amqps://fvehfrmn:huZU1LlMtNGwv7q6EIyc7Ajhc4naPcnh@hawk.rmq.cloudamqp.com/fvehfrmn',
+        ],
         queue: 'main_products_queue',
         queueOptions: {
           durable: false,
@@ -16,5 +18,6 @@ async function bootstrap() {
       },
     },
   );
+  await app.listen();
 }
 bootstrap();

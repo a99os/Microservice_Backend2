@@ -10,6 +10,7 @@ import {
 import { ProductService } from './product.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
+import { EventPattern } from '@nestjs/microservices';
 
 @Controller('products')
 export class ProductController {
@@ -22,8 +23,12 @@ export class ProductController {
 
   @Get()
   findAll() {
-    console.log('Salom');
     return this.productService.findAll();
+  }
+
+  @EventPattern('hello')
+  async hello(data: string) {
+    console.log(data);
   }
 
   @Get(':id')

@@ -17,6 +17,7 @@ const common_1 = require("@nestjs/common");
 const product_service_1 = require("./product.service");
 const create_product_dto_1 = require("./dto/create-product.dto");
 const update_product_dto_1 = require("./dto/update-product.dto");
+const microservices_1 = require("@nestjs/microservices");
 let ProductController = class ProductController {
     constructor(productService) {
         this.productService = productService;
@@ -25,8 +26,10 @@ let ProductController = class ProductController {
         return this.productService.create(createProductDto);
     }
     findAll() {
-        console.log('Salom');
         return this.productService.findAll();
+    }
+    async hello(data) {
+        console.log(data);
     }
     findOne(id) {
         return this.productService.findOne(+id);
@@ -51,6 +54,12 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
 ], ProductController.prototype, "findAll", null);
+__decorate([
+    (0, microservices_1.EventPattern)('hello'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], ProductController.prototype, "hello", null);
 __decorate([
     (0, common_1.Get)(':id'),
     __param(0, (0, common_1.Param)('id')),
