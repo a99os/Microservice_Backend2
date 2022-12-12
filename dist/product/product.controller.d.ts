@@ -29,30 +29,18 @@ import { UpdateProductDto } from './dto/update-product.dto';
 export declare class ProductController {
     private readonly productService;
     constructor(productService: ProductService);
-    create(createProductDto: CreateProductDto): import("mongoose").Document<unknown, any, import("./schemas/product.schema").Product> & import("./schemas/product.schema").Product & {
+    create(createProductDto: CreateProductDto): Promise<import("mongoose").Document<unknown, any, import("./schemas/product.schema").Product> & import("./schemas/product.schema").Product & {
         _id: import("mongoose").Types.ObjectId;
     } & Required<{
         _id: import("mongoose").Types.ObjectId;
-    }>;
+    }>>;
     findAll(): Promise<import("./schemas/product.schema").Product[]>;
     hello(data: string): Promise<void>;
     findOne(id: string): Promise<import("./schemas/product.schema").Product>;
-    update(id: string, updateProductDto: UpdateProductDto): import("mongoose").Query<import("mongoose").Document<unknown, any, import("./schemas/product.schema").Product> & import("./schemas/product.schema").Product & {
+    update(updateProductDto: UpdateProductDto): Promise<import("mongoose").Document<unknown, any, import("./schemas/product.schema").Product> & import("./schemas/product.schema").Product & {
         _id: import("mongoose").Types.ObjectId;
     } & Required<{
         _id: import("mongoose").Types.ObjectId;
-    }>, import("mongoose").Document<unknown, any, import("./schemas/product.schema").Product> & import("./schemas/product.schema").Product & {
-        _id: import("mongoose").Types.ObjectId;
-    } & Required<{
-        _id: import("mongoose").Types.ObjectId;
-    }>, {}, import("mongoose").Document<unknown, any, import("./schemas/product.schema").Product> & import("./schemas/product.schema").Product & {
-        _id: import("mongoose").Types.ObjectId;
-    }>;
-    remove(id: string): import("mongoose").Query<import("mongodb").DeleteResult, import("mongoose").Document<unknown, any, import("./schemas/product.schema").Product> & import("./schemas/product.schema").Product & {
-        _id: import("mongoose").Types.ObjectId;
-    } & Required<{
-        _id: import("mongoose").Types.ObjectId;
-    }>, {}, import("mongoose").Document<unknown, any, import("./schemas/product.schema").Product> & import("./schemas/product.schema").Product & {
-        _id: import("mongoose").Types.ObjectId;
-    }>;
+    }>>;
+    remove(id: number): Promise<import("mongodb").DeleteResult>;
 }

@@ -21,12 +21,15 @@ let ProductService = class ProductService {
     constructor(productModel) {
         this.productModel = productModel;
     }
-    create(createProductDto) {
-        const createProduct = new this.productModel(createProductDto);
+    async create(createProductDto) {
+        const createProduct = await this.productModel.create(createProductDto);
+        console.log(createProduct);
         return createProduct;
     }
-    findAll() {
-        return this.productModel.find().exec();
+    async findAll() {
+        const products = await this.productModel.find().exec();
+        console.log(products);
+        return products;
     }
     findOne(id) {
         return this.productModel.findOne({ id }).exec();

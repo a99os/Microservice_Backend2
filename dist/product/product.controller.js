@@ -11,6 +11,17 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
+var __rest = (this && this.__rest) || function (s, e) {
+    var t = {};
+    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+        t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function")
+        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+                t[p[i]] = s[p[i]];
+        }
+    return t;
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ProductController = void 0;
 const common_1 = require("@nestjs/common");
@@ -23,6 +34,7 @@ let ProductController = class ProductController {
         this.productService = productService;
     }
     create(createProductDto) {
+        console.log(createProductDto);
         return this.productService.create(createProductDto);
     }
     findAll() {
@@ -34,15 +46,18 @@ let ProductController = class ProductController {
     findOne(id) {
         return this.productService.findOne(+id);
     }
-    update(id, updateProductDto) {
-        return this.productService.update(+id, updateProductDto);
+    async update(updateProductDto) {
+        console.log(updateProductDto);
+        const { id } = updateProductDto, updateData = __rest(updateProductDto, ["id"]);
+        return await this.productService.update(+id, updateData);
     }
-    remove(id) {
-        return this.productService.remove(+id);
+    async remove(id) {
+        console.log(id);
+        return await this.productService.remove(+id);
     }
 };
 __decorate([
-    (0, common_1.Post)(),
+    (0, microservices_1.EventPattern)('product_created'),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [create_product_dto_1.CreateProductDto]),
@@ -68,19 +83,17 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], ProductController.prototype, "findOne", null);
 __decorate([
-    (0, common_1.Patch)(':id'),
-    __param(0, (0, common_1.Param)('id')),
-    __param(1, (0, common_1.Body)()),
+    (0, microservices_1.EventPattern)('product_updated'),
+    __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, update_product_dto_1.UpdateProductDto]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:paramtypes", [update_product_dto_1.UpdateProductDto]),
+    __metadata("design:returntype", Promise)
 ], ProductController.prototype, "update", null);
 __decorate([
-    (0, common_1.Delete)(':id'),
-    __param(0, (0, common_1.Param)('id')),
+    (0, microservices_1.EventPattern)('product_deleted'),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:paramtypes", [Number]),
+    __metadata("design:returntype", Promise)
 ], ProductController.prototype, "remove", null);
 ProductController = __decorate([
     (0, common_1.Controller)('products'),

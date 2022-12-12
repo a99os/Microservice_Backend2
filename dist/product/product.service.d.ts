@@ -29,11 +29,11 @@ import { Product, ProductDocument } from './schemas/product.schema';
 export declare class ProductService {
     private productModel;
     constructor(productModel: Model<ProductDocument>);
-    create(createProductDto: CreateProductDto): import("mongoose").Document<unknown, any, Product> & Product & {
+    create(createProductDto: CreateProductDto): Promise<import("mongoose").Document<unknown, any, Product> & Product & {
         _id: import("mongoose").Types.ObjectId;
     } & Required<{
         _id: import("mongoose").Types.ObjectId;
-    }>;
+    }>>;
     findAll(): Promise<Product[]>;
     findOne(id: number): Promise<Product>;
     update(id: number, updateProductDto: UpdateProductDto): import("mongoose").Query<import("mongoose").Document<unknown, any, Product> & Product & {

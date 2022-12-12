@@ -10,13 +10,16 @@ export class ProductService {
   constructor(
     @InjectModel(Product.name) private productModel: Model<ProductDocument>,
   ) {}
-  create(createProductDto: CreateProductDto) {
-    const createProduct = new this.productModel(createProductDto);
+  async create(createProductDto: CreateProductDto) {
+    const createProduct = await this.productModel.create(createProductDto);
+    console.log(createProduct);
     return createProduct;
   }
 
-  findAll(): Promise<Product[]> {
-    return this.productModel.find().exec();
+  async findAll(): Promise<Product[]> {
+    const products = await this.productModel.find().exec();
+    console.log(products);
+    return products;
   }
 
   findOne(id: number): Promise<Product> {
