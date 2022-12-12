@@ -29,13 +29,29 @@ const product_service_1 = require("./product.service");
 const create_product_dto_1 = require("./dto/create-product.dto");
 const update_product_dto_1 = require("./dto/update-product.dto");
 const microservices_1 = require("@nestjs/microservices");
+const axios_1 = require("@nestjs/axios");
 let ProductController = class ProductController {
-    constructor(productService) {
+    constructor(productService, httpService) {
         this.productService = productService;
+        this.httpService = httpService;
     }
     create(createProductDto) {
         console.log(createProductDto);
         return this.productService.create(createProductDto);
+    }
+    async likeBoss(id) {
+        const product = await this.productService.findOne(+id);
+        if (!product) {
+            throw new common_1.NotFoundException('Bunday product topilmadi');
+        }
+        this.httpService
+            .post(`http://localhost:3000/api/products/${id}/like`, {})
+            .subscribe((res) => {
+            console.log(res);
+        });
+        return this.productService.update(id, {
+            likes: product.likes + 1,
+        });
     }
     findAll() {
         return this.productService.findAll();
@@ -63,6 +79,13 @@ __decorate([
     __metadata("design:paramtypes", [create_product_dto_1.CreateProductDto]),
     __metadata("design:returntype", void 0)
 ], ProductController.prototype, "create", null);
+__decorate([
+    (0, common_1.Post)(':id/likes'),
+    __param(0, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number]),
+    __metadata("design:returntype", Promise)
+], ProductController.prototype, "likeBoss", null);
 __decorate([
     (0, common_1.Get)(),
     __metadata("design:type", Function),
@@ -97,7 +120,8 @@ __decorate([
 ], ProductController.prototype, "remove", null);
 ProductController = __decorate([
     (0, common_1.Controller)('products'),
-    __metadata("design:paramtypes", [product_service_1.ProductService])
+    __metadata("design:paramtypes", [product_service_1.ProductService,
+        axios_1.HttpService])
 ], ProductController);
 exports.ProductController = ProductController;
 //# sourceMappingURL=product.controller.js.map

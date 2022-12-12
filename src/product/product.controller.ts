@@ -6,15 +6,20 @@ import {
   Patch,
   Param,
   Delete,
+  NotFoundException,
 } from '@nestjs/common';
 import { ProductService } from './product.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { EventPattern } from '@nestjs/microservices';
+import { HttpService } from '@nestjs/axios';
 
 @Controller('products')
 export class ProductController {
-  constructor(private readonly productService: ProductService) {}
+  constructor(
+    private readonly productService: ProductService,
+    private readonly httpService: HttpService,
+  ) {}
 
   @EventPattern('product_created')
   create(@Body() createProductDto: CreateProductDto) {
@@ -22,10 +27,21 @@ export class ProductController {
     return this.productService.create(createProductDto);
   }
 
-  // @Post()
-  // create(@Body() createProductDto: CreateProductDto) {
-  //   return this.productService.create(createProductDto);
-  // }
+  @Post(':id/likes')
+  async likeBoss(@Param('id') id: number) {
+    const product = await this.productService.findOne(+id);
+    if (!product) {
+      throw new NotFoundException('Bunday product topilmadi');
+    }
+    this.httpService
+      .post(`http://localhost:3000/api/products/${id}/like`, {})
+      .subscribe((res) => {
+        console.log(res);
+      });
+    return this.productService.update(id, {
+      likes: product.likes + 1,
+    });
+  }
 
   @Get()
   findAll() {

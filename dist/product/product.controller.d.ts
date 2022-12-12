@@ -26,10 +26,17 @@
 import { ProductService } from './product.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
+import { HttpService } from '@nestjs/axios';
 export declare class ProductController {
     private readonly productService;
-    constructor(productService: ProductService);
+    private readonly httpService;
+    constructor(productService: ProductService, httpService: HttpService);
     create(createProductDto: CreateProductDto): Promise<import("mongoose").Document<unknown, any, import("./schemas/product.schema").Product> & import("./schemas/product.schema").Product & {
+        _id: import("mongoose").Types.ObjectId;
+    } & Required<{
+        _id: import("mongoose").Types.ObjectId;
+    }>>;
+    likeBoss(id: number): Promise<import("mongoose").Document<unknown, any, import("./schemas/product.schema").Product> & import("./schemas/product.schema").Product & {
         _id: import("mongoose").Types.ObjectId;
     } & Required<{
         _id: import("mongoose").Types.ObjectId;
